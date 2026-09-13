@@ -1,4 +1,36 @@
-# Cấu hình LOIC — Kịch bản HTTP Flood
+# LOIC Configuration — HTTP Flood Scenario
+
+**Tool:** LOIC (Low Orbit Ion Cannon)
+**Executed on:** Kali Linux (Attacker) — 192.168.100.10
+**Target:** Windows (Victim) — 192.168.100.20, port 8000 (Python http.server)
+
+## Configuration Parameters Used in the Experiment
+
+| Field                     | Value |
+|---------------------------|-------|
+| Target IP / URL           | `192.168.100.20` |
+| Port                      | `8000` |
+| Method                    | HTTP – continuous `GET` requests |
+| Threads                   | Set based on host capacity (enough to generate observable load while respecting the lab‑environment hardware limits) |
+| Attack Mode               | Continuous flood (no request limit) |
+
+## Procedure
+
+1. **Verify the Python HTTP server on the victim is running** before launching LOIC:
+    ```bash
+    curl -I http://192.168.100.20:8000
+    ```
+2. Open LOIC on the Kali attacker, input the Target IP and Port as shown in the table above.
+3. Start a Wireshark capture on the Kali host **before** pressing the “IMMA CHARGIN MAH LAZER” button in LOIC.
+4. Observe:
+    - TCP traffic increase on Wireshark I/O Graph.
+    - Logs/console of the Python HTTP server on Windows for abnormal errors such as `ConnectionAbortedError`.
+5. Stop LOIC, stop the capture, and save the `.pcapng` file for later analysis.
+
+## Safety Note
+
+Only target the internal‑network IP `192.168.100.20` (the victim machine within the isolated Internal Network). **Do not** configure LOIC to attack any public domain or IP address.
+
 
 **Công cụ:** LOIC (Low Orbit Ion Cannon)
 **Chạy trên:** Kali Linux (Attacker) — 192.168.100.10
